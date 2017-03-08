@@ -1,12 +1,12 @@
 Notes
 -----
-This application allows you to enter your own notes and save them for future use or modification. It uses React+Redux for the front-end and Hapi for the back-end.
+This application allows you to enter your own notes and save them for future use or modification. It uses React+Redux for the front-end and Hapi+SQLite for the back-end.
 
 I've written it to train my React skills.
 
 It is heavily based on Allen's [Sorting-Hat](https://github.com/allendav/sorting-hat), and [WooCommerce Services](https://github.com/Automattic/woocommerce-services/).
 
-To build the front-end, run `npm build`.
+To build the front-end, run `npm run build`.
 
 Afterwards, run `npm start` to start the server.
 
