@@ -1,17 +1,12 @@
 import { createStore, combineReducers } from 'redux';
-import { REQUEST_NOTES, RECEIVE_NOTES } from '../actions';
+import { REQUEST_NOTES, REQUEST_NOTE } from '../actions';
 
 // Notes reducer
 // jshint -W138
-function notes( state = { isFetching: false, notes: [] }, action ) {
+function notes( state = { notes: [] }, action ) {
 	switch ( action.type ) {
 		case REQUEST_NOTES:
 			return Object.assign( {}, state, {
-				isFetching: true
-			} );
-		case RECEIVE_NOTES:
-			return Object.assign( {}, state, {
-				isFetching: false,
 				notes: action.notes
 			} );
 		default:
@@ -19,8 +14,21 @@ function notes( state = { isFetching: false, notes: [] }, action ) {
 	}
 }
 
+function note( state = { note: '', id: null }, action ) {
+	switch ( action.type ) {
+		case REQUEST_NOTE:
+			return Object.assign( {}, state, {
+				note: action.note,
+				id: action.id
+			} );
+		default:
+			return state;
+	}
+}
+
 const rootReducer = combineReducers( {
-	notes
+	notes,
+	note
 } );
 
 export default rootReducer;

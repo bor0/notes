@@ -13,8 +13,8 @@ module.exports = {
 		});
 	},
 	getNote: function( request, reply ) {
-		db.all('SELECT rowid AS id, note FROM notes WHERE rowid = ?', request.params.id, function(err, rows) {
-			reply(rows);
+		db.all('SELECT note FROM notes WHERE rowid = ?', request.params.id, function(err, rows) {
+			reply(rows[0] || {});
 		});
 	},
 	deleteNote: function( request, reply ) {
