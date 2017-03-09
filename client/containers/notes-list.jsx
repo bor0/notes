@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { fetchNotes } from '../actions';
 import { fetchNote } from '../actions';
 import { deleteNote } from '../actions';
+import { createNote } from '../actions';
 import { connect } from 'react-redux';
 
 class NotesList extends Component {
@@ -17,9 +18,15 @@ class NotesList extends Component {
 
 	handleDeleteClick( e ) {
 		const { dispatch } = this.props;
-		dispatch( deleteNote( e.currentTarget.dataset.id ) );
-		dispatch( fetchNotes() );
+		dispatch( deleteNote( e.currentTarget.dataset.id ) )
+			.then( () => dispatch( fetchNotes() ) );
 		// TODO: Reset current note view
+	}
+
+	handleCreateNoteClick( e ) {
+		const { dispatch } = this.props;
+		dispatch( createNote( 'Hello! This is an example note!' ) )
+			.then( () => dispatch( fetchNotes() ) );
 	}
 
 	render() {
@@ -27,8 +34,12 @@ class NotesList extends Component {
 
 		return (
 			<div>
-				<div className='box' key='create'><a href='#'>Create Note</a></div>
-				<div className='borderless-box'>List of Notes:</div>
+				<div className='box' key='create'>
+					<a href='#' onClick={ (e) => this.handleCreateNoteClick ( e ) }>Create Note</a>
+				</div>
+				<div className='borderless-box'>
+					List of Notes:
+				</div>
 				{
 					notes.map( note => (
 						<div className='box' key={ note.id }>

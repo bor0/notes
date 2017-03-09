@@ -1,6 +1,7 @@
 export const REQUEST_NOTES = 'REQUEST_NOTES';
 export const REQUEST_NOTE = 'REQUEST_NOTE';
 export const REQUEST_DELETE_NOTE = 'REQUEST_DELETE_NOTE';
+export const REQUEST_CREATE_NOTE = 'REQUEST_CREATE_NOTE';
 
 export const requestNotes = ( json ) => {
 	return {
@@ -23,10 +24,17 @@ export const requestDeleteNote = ( json ) => {
 	};
 };
 
+export const requestCreateNote = ( json ) => {
+	return {
+		type: REQUEST_CREATE_NOTE,
+		note: json.note
+	};
+};
+
 export function fetchNotes() {
 	return dispatch => {
 		dispatch( requestNotes() );
-		return fetch( '/api/notes' )
+		return fetch( '/api/note/' )
 			.then( response => response.json() )
 			.then( json => dispatch( requestNotes( json ) ) );
 		};
@@ -47,5 +55,18 @@ export function deleteNote( id ) {
 		return fetch( '/api/note/' + id, { method: 'DELETE' } )
 			.then( response => response.json() )
 			.then( json => dispatch( requestDeleteNote( json ) ) );
+		};
+}
+
+export function createNote( text ) {
+	return dispatch => {
+		dispatch( requestCreateNote( text ) );
+
+		const formData = new FormData();
+		formData.append('note', text);
+
+		return fetch( '/api/note/', { method: 'POST', body: formData } )
+			.then( response => response.json() )
+			.then( json => dispatch( requestCreateNote( json ) ) );
 		};
 }

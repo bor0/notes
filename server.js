@@ -36,7 +36,7 @@ server.register([{
 	// Add a route for retrieving all notes ids
 	server.route({
 		method: 'GET',
-		path: '/api/notes',
+		path: '/api/note/',
 		handler: function( request, reply ) {
 			api.getNotes( request, reply );
 		}
@@ -72,7 +72,7 @@ server.register([{
 	// Add a route for creating a note
 	server.route({
 		method: 'POST',
-		path: '/api/notes',
+		path: '/api/note/',
 		handler: function( request, reply ) {
 			api.addNote( request, reply );
 		}
