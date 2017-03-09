@@ -18,8 +18,9 @@ module.exports = {
 		});
 	},
 	deleteNote: function( request, reply ) {
-		db.run('DELETE FROM notes WHERE rowid = ?', request.params.id);
-		reply();
+		db.run('DELETE FROM notes WHERE rowid = ?', request.params.id, function() {
+			reply({changes: this.changes});
+		});
 	},
 	addNote: function( request, reply ) {
 		db.run('INSERT INTO notes VALUES (?)', request.payload.note, function() {
