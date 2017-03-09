@@ -1,5 +1,5 @@
 import { createStore, combineReducers } from 'redux';
-import { REQUEST_NOTES, REQUEST_NOTE, REQUEST_DELETE_NOTE, REQUEST_CREATE_NOTE, REQUEST_UPDATE_NOTE } from '../actions';
+import { REQUEST_NOTES, REQUEST_NOTE, REQUEST_UPDATE_NOTE } from '../actions';
 
 // list of notes reducer
 function notes( state = { notes: [] }, action ) {

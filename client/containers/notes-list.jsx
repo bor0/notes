@@ -19,16 +19,16 @@ class NotesList extends Component {
 	handleDeleteClick( e ) {
 		const { dispatch } = this.props;
 		dispatch( deleteNote( e.currentTarget.dataset.id ) )
-			.then( () => dispatch( fetchNotes() ) )
-			.then( () => alert('Note deleted!') );
+			.then( ( json ) => { if ( json.changes ) alert('Note deleted!') } )
+			.then( () => dispatch( fetchNotes() ) );
 		// TODO: Reset current note view
 	}
 
 	handleCreateNoteClick( e ) {
 		const { dispatch } = this.props;
 		dispatch( createNote( 'Hello! This is an example note!' ) )
-			.then( () => dispatch( fetchNotes() ) )
-			.then( () => alert('Note created!') );
+			.then( ( json ) => { if ( json.id ) alert('Note created!') } )
+			.then( () => dispatch( fetchNotes() ) );
 	}
 
 	render() {
@@ -38,6 +38,9 @@ class NotesList extends Component {
 			<div>
 				<div className='box' key='create'>
 					<a href='#' onClick={ (e) => this.handleCreateNoteClick ( e ) }>Create Note</a>
+				</div>
+				<div className='borderless-box'>
+					<a href='#' onClick={ (e) => this.componentDidMount() }><img src='images/reload.png' /></a>
 				</div>
 				<div className='borderless-box'>
 					List of Notes:

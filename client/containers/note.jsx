@@ -13,9 +13,12 @@ class Note extends Component {
 	};
 
 	handleSaveNoteClick( note ) {
-		const { dispatch } = this.props;
+		const { id, dispatch } = this.props;
+
+		if ( ! id ) return;
+
 		dispatch( updateNote( note ) )
-			.then( ( e ) => { console.log(e); alert('Note updated!') } );
+			.then( ( json ) => { if ( json.changes ) alert('Note updated!') } );
 	}
 
 	handleTextChange( e ) {
