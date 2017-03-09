@@ -22,7 +22,7 @@ export const requestNote = ( json ) => {
 export const requestDeleteNote = ( json ) => {
 	return {
 		type: REQUEST_DELETE_NOTE,
-		note: json.note
+		data: json
 	};
 };
 
@@ -36,7 +36,8 @@ export const requestCreateNote = ( json ) => {
 export const requestUpdateNote = ( json ) => {
 	return {
 		type: REQUEST_UPDATE_NOTE,
-		data: json
+		id: json.id,
+		note: json.note
 	};
 };
 
@@ -91,7 +92,6 @@ export function updateNote( note ) {
 		formData.append('note', note.note);
 
 		return fetch( '/api/note/' + note.id, { method: 'PUT', body: formData } )
-			.then( response => response.json() )
-			.then( json => dispatch( requestUpdateNote( json ) ) );
+			.then( response => response.json() );
 		};
 }

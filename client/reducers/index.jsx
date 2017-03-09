@@ -1,8 +1,7 @@
 import { createStore, combineReducers } from 'redux';
-import { REQUEST_NOTES, REQUEST_NOTE } from '../actions';
+import { REQUEST_NOTES, REQUEST_NOTE, REQUEST_DELETE_NOTE, REQUEST_CREATE_NOTE, REQUEST_UPDATE_NOTE } from '../actions';
 
-// Notes reducer
-// jshint -W138
+// list of notes reducer
 function notes( state = { notes: [] }, action ) {
 	switch ( action.type ) {
 		case REQUEST_NOTES:
@@ -14,8 +13,10 @@ function notes( state = { notes: [] }, action ) {
 	}
 }
 
+// read reducer
 function note( state = { note: '', id: null }, action ) {
 	switch ( action.type ) {
+		case REQUEST_UPDATE_NOTE:
 		case REQUEST_NOTE:
 			return Object.assign( {}, state, {
 				note: action.note,

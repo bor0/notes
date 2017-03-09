@@ -19,14 +19,16 @@ class NotesList extends Component {
 	handleDeleteClick( e ) {
 		const { dispatch } = this.props;
 		dispatch( deleteNote( e.currentTarget.dataset.id ) )
-			.then( () => dispatch( fetchNotes() ) );
+			.then( () => dispatch( fetchNotes() ) )
+			.then( () => alert('Note deleted!') );
 		// TODO: Reset current note view
 	}
 
 	handleCreateNoteClick( e ) {
 		const { dispatch } = this.props;
 		dispatch( createNote( 'Hello! This is an example note!' ) )
-			.then( () => dispatch( fetchNotes() ) );
+			.then( () => dispatch( fetchNotes() ) )
+			.then( () => alert('Note created!') );
 	}
 
 	render() {
