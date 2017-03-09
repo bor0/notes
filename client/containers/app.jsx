@@ -5,8 +5,15 @@ import Note from './note';
 export default class App extends Component {
 	render() {
 		return (
-//			<NotesList />
-			<Note id="3" />
+			<div>
+				<div id='left'>
+					<NotesList />
+				</div>
+
+				<div id='right'>
+					<Note />
+				</div>
+			</div>
 		);
 	};
 }

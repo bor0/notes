@@ -5,17 +5,16 @@ import { connect } from 'react-redux';
 class Note extends Component {
 	componentDidMount() {
 		const { dispatch, id } = this.props;
-		dispatch( fetchNote( id ) ); // we can do this thanks to middleware
+		if ( id ) {
+			dispatch( fetchNote( id ) ); // we can do this thanks to middleware
+		}
 	};
 
 	render() {
 		const note = this.props || {};
 
 		return (
-			<div>
-				<input type="hidden" name="note-id" value={ note.id } />
-				<textarea value={ note.note } />
-			</div>
+			<textarea value={ note.note } />
 		);
 	};
 }

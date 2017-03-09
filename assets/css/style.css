@@ -1,0 +1,25 @@
+.box {
+	width: 120px;
+	padding: 10px;
+	border: 3px solid gray;
+	margin: 0;
+	text-align: center;
+}
+
+.borderless-box {
+	width: 120px;
+	padding: 10px;
+	margin: 0;
+	text-align: center;
+}
+
+#left {
+	position: absolute;
+}
+
+#right {
+	width: 88%;
+	height: 100%;
+	position: absolute;
+	right: 0;
+}
