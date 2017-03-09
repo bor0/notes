@@ -17,6 +17,9 @@ API calls:
 - Retrieve a single note: `curl "http://localhost:8000/api/note/1"`
 - Delete a single note: `curl -X DELETE "http://localhost:8000/api/note/1"`
 
+Short demo:
+![Notes demo](https://raw.githubusercontent.com/bor0/notes/master/notes-demo.gif)
+
 Boro Sitnikovski
 
 March, 2017
