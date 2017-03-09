@@ -31,7 +31,9 @@ class Note extends Component {
 
 		return (
 			<div>
+				<h3>{ note.id }</h3>
 				<textarea value={ note.note } onChange={ (e) => this.handleTextChange(e) } />
+				<br />
 				<a href='#' onClick={ (e) => this.handleSaveNoteClick( note ) }><img src='images/save.png' /></a>
 			</div>
 		);
