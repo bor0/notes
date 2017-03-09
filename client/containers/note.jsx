@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { fetchNote } from '../actions';
+import { updateNote } from '../actions';
 import { connect } from 'react-redux';
 
 class Note extends Component {
@@ -10,19 +11,28 @@ class Note extends Component {
 		}
 	};
 
+	handleSaveNoteClick( note ) {
+		const { dispatch } = this.props;
+		dispatch( updateNote( note ) );
+	}
+
 	render() {
 		const note = this.props || {};
 
 		return (
-			<textarea value={ note.note } />
+			<div>
+				<textarea value={ note.note } />
+				<a href='#' onClick={ (e) => this.handleSaveNoteClick( note ) }><img src='images/save.png' /></a>
+			</div>
 		);
 	};
 }
 
 function mapStateToProps( state ) {
-	const { note } = state.note || [];
+	const { id, note } = state.note || [];
 
 	return {
+		id: id,
 		note: note
 	};
 };

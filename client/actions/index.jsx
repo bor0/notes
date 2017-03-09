@@ -2,6 +2,7 @@ export const REQUEST_NOTES = 'REQUEST_NOTES';
 export const REQUEST_NOTE = 'REQUEST_NOTE';
 export const REQUEST_DELETE_NOTE = 'REQUEST_DELETE_NOTE';
 export const REQUEST_CREATE_NOTE = 'REQUEST_CREATE_NOTE';
+export const REQUEST_UPDATE_NOTE = 'REQUEST_UPDATE_NOTE';
 
 export const requestNotes = ( json ) => {
 	return {
@@ -13,6 +14,7 @@ export const requestNotes = ( json ) => {
 export const requestNote = ( json ) => {
 	return {
 		type: REQUEST_NOTE,
+		id: json.id,
 		note: json.note
 	};
 };
@@ -27,7 +29,14 @@ export const requestDeleteNote = ( json ) => {
 export const requestCreateNote = ( json ) => {
 	return {
 		type: REQUEST_CREATE_NOTE,
-		note: json.note
+		data: json
+	};
+};
+
+export const requestUpdateNote = ( json ) => {
+	return {
+		type: REQUEST_UPDATE_NOTE,
+		data: json
 	};
 };
 
@@ -45,7 +54,10 @@ export function fetchNote( id ) {
 		dispatch( requestNote( id ) );
 		return fetch( '/api/note/' + id )
 			.then( response => response.json() )
-			.then( json => dispatch( requestNote( json ) ) );
+			.then( json => {
+				json.id = id;
+				dispatch( requestNote( json ) )
+			} );
 		};
 }
 
@@ -58,15 +70,28 @@ export function deleteNote( id ) {
 		};
 }
 
-export function createNote( text ) {
+export function createNote( note ) {
 	return dispatch => {
-		dispatch( requestCreateNote( text ) );
+		dispatch( requestCreateNote( note ) );
 
 		const formData = new FormData();
-		formData.append('note', text);
+		formData.append('note', note);
 
 		return fetch( '/api/note/', { method: 'POST', body: formData } )
 			.then( response => response.json() )
 			.then( json => dispatch( requestCreateNote( json ) ) );
+		};
+}
+
+export function updateNote( note ) {
+	return dispatch => {
+		dispatch( requestUpdateNote( note ) );
+
+		const formData = new FormData();
+		formData.append('note', note.note);
+
+		return fetch( '/api/note/' + note.id, { method: 'PUT', body: formData } )
+			.then( response => response.json() )
+			.then( json => dispatch( requestUpdateNote( json ) ) );
 		};
 }
