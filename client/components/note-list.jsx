@@ -5,7 +5,7 @@ import { deleteNote } from '../actions';
 import { createNote } from '../actions';
 import { connect } from 'react-redux';
 
-class NotesList extends Component {
+class NoteList extends Component {
 	componentDidMount() {
 		const { dispatch } = this.props;
 		dispatch( fetchNotes() ); // we can do this thanks to middleware
@@ -66,4 +66,4 @@ function mapStateToProps( state ) {
 	};
 };
 
-export default connect( mapStateToProps )( NotesList );
+export default connect( mapStateToProps )( NoteList );

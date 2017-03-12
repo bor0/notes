@@ -4,7 +4,7 @@ import { updateNote } from '../actions';
 import { requestUpdateNote } from '../actions';
 import { connect } from 'react-redux';
 
-class Note extends Component {
+class NoteEditor extends Component {
 	componentDidMount() {
 		const { dispatch, id } = this.props;
 		if ( id ) {
@@ -12,29 +12,29 @@ class Note extends Component {
 		}
 	};
 
-	handleSaveNoteClick( note ) {
-		const { id, dispatch } = this.props;
+	handleSaveNoteClick() {
+		const { note, id, dispatch } = this.props;
 
 		if ( ! id ) return;
 
-		dispatch( updateNote( note ) )
+		dispatch( updateNote( { note, id } ) )
 			.then( ( json ) => { if ( json.changes ) alert('Note updated!') } );
 	}
 
 	handleTextChange( e ) {
-		const { dispatch, id } = this.props
-		dispatch( requestUpdateNote( { note: e.target.value, id: id } ) );
+		const { dispatch, id } = this.props;
+		dispatch( requestUpdateNote( { note: e.target.value, id } ) );
 	}
 
 	render() {
-		const note = this.props || {};
+		const { note, id } = this.props || {};
 
 		return (
 			<div>
-				<h3>{ note.id }</h3>
-				<textarea value={ note.note } onChange={ (e) => this.handleTextChange(e) } />
+				<h3>{ id }</h3>
+				<textarea value={ note } onChange={ (e) => this.handleTextChange(e) } />
 				<br />
-				<a href='#' onClick={ (e) => this.handleSaveNoteClick( note ) }><img src='images/save.png' /></a>
+				<a href='#' onClick={ () => this.handleSaveNoteClick() }><img src='images/save.png' /></a>
 			</div>
 		);
 	};
@@ -49,4 +49,4 @@ function mapStateToProps( state ) {
 	};
 };
 
-export default connect( mapStateToProps )( Note );
+export default connect( mapStateToProps )( NoteEditor );

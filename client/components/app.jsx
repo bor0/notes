@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
-import NotesList from './notes-list';
-import Note from './note';
+import NoteList from './note-list';
+import NoteEditor from './note-editor';
 
 const App = () => {
 	return (
 		<div>
 			<div id='left'>
-				<NotesList />
+				<NoteList />
 			</div>
 
 			<div id='right'>
-				<Note />
+				<NoteEditor />
 			</div>
 		</div>
 	);
