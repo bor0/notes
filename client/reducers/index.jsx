@@ -1,8 +1,10 @@
 import { createStore, combineReducers } from 'redux';
 import { REQUEST_NOTES, REQUEST_NOTE, REQUEST_UPDATE_NOTE } from '../actions';
 
-// list of notes reducer
-function notes( state = { notes: [] }, action ) {
+// We define these reducers (note, notes) to be later used by mapStateToProps for the NoteEditor and the NoteList.
+
+// List of notes reducer
+const notes = ( state = { notes: [] }, action ) => {
 	switch ( action.type ) {
 		case REQUEST_NOTES:
 			return Object.assign( {}, state, {
@@ -13,8 +15,8 @@ function notes( state = { notes: [] }, action ) {
 	}
 }
 
-// read reducer
-function note( state = { note: '', id: null }, action ) {
+// Read reducer
+const note = ( state = { note: '', id: null }, action ) => {
 	switch ( action.type ) {
 		case REQUEST_UPDATE_NOTE:
 		case REQUEST_NOTE:

@@ -15,7 +15,7 @@ class NoteListItem extends Component {
 		const { dispatch, id } = this.props;
 
 		dispatch( deleteNote( id ) )
-			.then( ( json ) => { if ( json.changes ) alert('Note deleted!') } )
+			.then( ( json ) => { if ( json.changes ) alert( 'Note deleted!' ) } )
 			.then( () => dispatch( fetchNotes() ) );
 		// TODO: Reset current note view
 	}
@@ -33,4 +33,5 @@ class NoteListItem extends Component {
 	}
 }
 
+// We only want to have dispatch, so we don't need mapStateToProps.
 export default connect()( NoteListItem );

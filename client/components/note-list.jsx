@@ -13,7 +13,7 @@ class NoteList extends Component {
 	handleCreateNoteClick( e ) {
 		const { dispatch } = this.props;
 		dispatch( createNote( 'Hello! This is an example note!' ) )
-			.then( ( json ) => { if ( json.id ) alert('Note created!') } )
+			.then( ( json ) => { if ( json.id ) alert( 'Note created!' ) } )
 			.then( () => dispatch( fetchNotes() ) );
 	}
 
@@ -23,10 +23,10 @@ class NoteList extends Component {
 		return (
 			<div>
 				<div className='box'>
-					<a href='#' onClick={ (e) => this.handleCreateNoteClick( e ) }>Create Note</a>
+					<a href='#' onClick={ ( e ) => this.handleCreateNoteClick( e ) }>Create Note</a>
 				</div>
 				<div className='borderless-box'>
-					<a href='#' onClick={ (e) => this.componentDidMount() }><img src='images/reload.png' /></a>
+					<a href='#' onClick={ ( e ) => this.componentDidMount() }><img src='images/reload.png' /></a>
 				</div>
 				<div className='borderless-box'>
 					List of Notes:
@@ -40,7 +40,7 @@ class NoteList extends Component {
 }
 
 // This gets called for every dispatch.
-function mapStateToProps( state ) {
+const mapStateToProps = ( state ) => {
 	const { notes } = state.notes || [];
 
 	return { notes };
