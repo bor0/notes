@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
+import NoteListItem from './note-list-item';
 import { fetchNotes } from '../actions';
-import { fetchNote } from '../actions';
-import { deleteNote } from '../actions';
 import { createNote } from '../actions';
 import { connect } from 'react-redux';
 
@@ -10,19 +9,6 @@ class NoteList extends Component {
 		const { dispatch } = this.props;
 		dispatch( fetchNotes() ); // we can do this thanks to middleware
 	};
-
-	handleFetchClick( e ) {
-		const { dispatch } = this.props;
-		dispatch( fetchNote( e.currentTarget.dataset.id ) );
-	}
-
-	handleDeleteClick( e ) {
-		const { dispatch } = this.props;
-		dispatch( deleteNote( e.currentTarget.dataset.id ) )
-			.then( ( json ) => { if ( json.changes ) alert('Note deleted!') } )
-			.then( () => dispatch( fetchNotes() ) );
-		// TODO: Reset current note view
-	}
 
 	handleCreateNoteClick( e ) {
 		const { dispatch } = this.props;
@@ -36,8 +22,8 @@ class NoteList extends Component {
 
 		return (
 			<div>
-				<div className='box' key='create'>
-					<a href='#' onClick={ (e) => this.handleCreateNoteClick ( e ) }>Create Note</a>
+				<div className='box'>
+					<a href='#' onClick={ (e) => this.handleCreateNoteClick( e ) }>Create Note</a>
 				</div>
 				<div className='borderless-box'>
 					<a href='#' onClick={ (e) => this.componentDidMount() }><img src='images/reload.png' /></a>
@@ -46,24 +32,18 @@ class NoteList extends Component {
 					List of Notes:
 				</div>
 				{
-					notes.map( note => (
-						<div className='box' key={ note.id }>
-							<a href='#' data-id={ note.id } onClick={ (e) => this.handleFetchClick( e ) }>Note #{ note.id }</a>
-							<a href='#' data-id={ note.id } onClick={ (e) => this.handleDeleteClick( e ) }><img src='images/delete.png' /></a>
-						</div>
-					) )
+					notes.map( note => <NoteListItem id={ note.id } key={ note.id } /> )
 				}
 			</div>
 		);
 	};
 }
 
+// This gets called for every dispatch.
 function mapStateToProps( state ) {
 	const { notes } = state.notes || [];
 
-	return {
-		notes: notes
-	};
+	return { notes };
 };
 
 export default connect( mapStateToProps )( NoteList );

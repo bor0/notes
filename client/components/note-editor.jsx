@@ -40,13 +40,11 @@ class NoteEditor extends Component {
 	};
 }
 
-function mapStateToProps( state ) {
-	const { id, note } = state.note || [];
 
-	return {
-		id: id,
-		note: note
-	};
+function mapStateToProps( state ) {
+	const { id, note } = state.note || {};
+
+	return { id, note };
 };
 
 export default connect( mapStateToProps )( NoteEditor );
