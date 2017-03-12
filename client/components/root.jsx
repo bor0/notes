@@ -5,12 +5,12 @@ import App from './app';
 
 const store = configureStore();
 
-export default class Root extends Component {
-	render() {
-		return (
-			<Provider store={ store }>
-				<App />
-			</Provider>
-		);
-	};
-}
+const Root = () => {
+	return (
+		<Provider store={ store }>
+			<App />
+		</Provider>
+	);
+};
+
+export default Root;
