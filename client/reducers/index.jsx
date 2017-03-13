@@ -1,4 +1,4 @@
-import { createStore, combineReducers } from 'redux';
+import { combineReducers } from 'redux';
 import { REQUEST_NOTES, REQUEST_NOTE, REQUEST_UPDATE_NOTE } from '../actions';
 
 // We define these reducers (note, notes) to be later used by mapStateToProps for the NoteEditor and the NoteList.
@@ -8,12 +8,12 @@ const notes = ( state = { notes: [] }, action ) => {
 	switch ( action.type ) {
 		case REQUEST_NOTES:
 			return Object.assign( {}, state, {
-				notes: action.notes
+				notes: action.notes,
 			} );
 		default:
 			return state;
 	}
-}
+};
 
 // Read reducer
 const note = ( state = { note: '', id: null }, action ) => {
@@ -22,16 +22,16 @@ const note = ( state = { note: '', id: null }, action ) => {
 		case REQUEST_NOTE:
 			return Object.assign( {}, state, {
 				note: action.note,
-				id: action.id
+				id: action.id,
 			} );
 		default:
 			return state;
 	}
-}
+};
 
 const rootReducer = combineReducers( {
 	notes,
-	note
+	note,
 } );
 
 export default rootReducer;

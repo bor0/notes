@@ -15,7 +15,9 @@ class NoteListItem extends Component {
 		const { dispatch, id } = this.props;
 
 		dispatch( deleteNote( id ) )
-			.then( ( json ) => { if ( json.changes ) alert( 'Note deleted!' ) } )
+			.then( ( json ) => {
+				if ( json.changes ) alert( 'Note deleted!' );
+			} )
 			.then( () => dispatch( fetchNotes() ) );
 		// TODO: Reset current note view
 	}
@@ -24,12 +26,11 @@ class NoteListItem extends Component {
 		const { id } = this.props;
 
 		return (
-			<div className='box'>
-				<a href='#' onClick={ () => this.handleFetchClick() }>Note #{ id }</a>
-				<a href='#' onClick={ () => this.handleDeleteClick() }><img src='images/delete.png' /></a>
+			<div className="box">
+				<a href="#" onClick={ () => this.handleFetchClick() }>Note #{ id }</a>
+				<a href="#" onClick={ () => this.handleDeleteClick() }><img src="images/delete.png" /></a>
 			</div>
 		);
-
 	}
 }
 

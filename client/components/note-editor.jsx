@@ -18,7 +18,9 @@ class NoteEditor extends Component {
 		if ( ! id ) return;
 
 		dispatch( updateNote( { note, id } ) )
-			.then( ( json ) => { if ( json.changes ) alert( 'Note updated!' ) } );
+			.then( ( json ) => {
+				if ( json.changes ) alert( 'Note updated!' );
+			} );
 	}
 
 	handleTextChange( e ) {
@@ -34,7 +36,7 @@ class NoteEditor extends Component {
 				<h3>{ id }</h3>
 				<textarea value={ note } onChange={ ( e ) => this.handleTextChange( e ) } />
 				<br />
-				<a href='#' onClick={ () => this.handleSaveNoteClick() }><img src='images/save.png' /></a>
+				<a href="#" onClick={ () => this.handleSaveNoteClick() }><img src="images/save.png" /></a>
 			</div>
 		);
 	};
