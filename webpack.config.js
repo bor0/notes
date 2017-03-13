@@ -1,4 +1,6 @@
 // Webpack config file
+const path = require( 'path' );
+
 module.exports = {
 	entry: './client/index.jsx',
 	output: {
@@ -7,6 +9,17 @@ module.exports = {
 	},
 	module: {
 		loaders: [
+			{
+				test: /\.jsx?$/,
+				enforce: 'pre',
+				use: {
+					loader: 'eslint-loader',
+					options: {
+						emitWarning: true,
+					},
+				},
+				include: path.resolve( __dirname, 'client' ),
+			},
 			{
 				test: /\.jsx?$/,
 				loader: 'babel-loader'
