@@ -2,7 +2,7 @@ Notes
 -----
 This application allows you to enter your own notes and save them for future use or modification. It uses React+Redux for the front-end and Hapi+SQLite for the back-end.
 
-I've written it to train my React skills.
+I've written it to train my React skills. Tutorial: https://egghead.io/courses/getting-started-with-redux.
 
 It is heavily based on Allen's [Sorting-Hat](https://github.com/allendav/sorting-hat), and [WooCommerce Services](https://github.com/Automattic/woocommerce-services/).
 
