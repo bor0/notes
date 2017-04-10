@@ -1,6 +1,6 @@
 import React from 'react';
-import NoteList from './note-list';
-import NoteEditor from './note-editor';
+import NoteList from '../components/note-list';
+import NoteEditor from '../components/note-editor';
 
 const App = () => {
 	return (
