@@ -19,7 +19,7 @@ class NoteEditor extends Component {
 
 		dispatch( updateNote( { note, id } ) )
 			.then( ( json ) => {
-				if ( json.changes ) alert( 'Note updated!' );
+				if ( json.changes ) console.log( 'Note updated!' );
 			} );
 	}
 
@@ -32,7 +32,7 @@ class NoteEditor extends Component {
 		const { note, id } = this.props || {};
 
 		return (
-			<div>
+			<div style={ { display: id ? '' : 'none' } }>
 				<h3>{ id }</h3>
 				<textarea value={ note } onChange={ ( e ) => this.handleTextChange( e ) } />
 				<br />

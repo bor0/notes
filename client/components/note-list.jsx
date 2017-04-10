@@ -14,7 +14,7 @@ class NoteList extends Component {
 		const { dispatch } = this.props;
 		dispatch( createNote( 'Hello! This is an example note!' ) )
 			.then( ( json ) => {
-				if ( json.id ) alert( 'Note created!' );
+				if ( json.id ) console.log( 'Note created!' );
 			} )
 			.then( () => dispatch( fetchNotes() ) );
 	}

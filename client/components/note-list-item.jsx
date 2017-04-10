@@ -16,7 +16,7 @@ class NoteListItem extends Component {
 
 		dispatch( deleteNote( id ) )
 			.then( ( json ) => {
-				if ( json.changes ) alert( 'Note deleted!' );
+				if ( json.changes ) console.log( 'Note deleted!' );
 			} )
 			.then( () => dispatch( fetchNotes() ) );
 		// TODO: Reset current note view
