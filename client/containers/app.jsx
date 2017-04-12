@@ -47,8 +47,7 @@ class App extends Component {
 	render() {
 		const { dispatch } = this.props;
 		const { notes } = this.props;
-		const onenote = this.props.note;
-		const { note, id } = onenote || {};
+		const { note, id } = this.props.note || {};
 
 		return (
 			<div>
@@ -78,10 +77,9 @@ class App extends Component {
 // This gets called for every dispatch.
 const mapStateToProps = ( state ) => {
 	const notes = state.notes.notes || [];
-//	const { note } = state.note || {};
+	const { id, note } = state.note || {};
 
-	return { notes };
-//	return { notes, note };
+	return { notes, note: { id, note } };
 };
 
 export default connect( mapStateToProps )( App );

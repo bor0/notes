@@ -41,7 +41,7 @@ export function fetchNote( id ) {
 			.then( response => response.json() )
 			.then( json => {
 				json.id = id;
-				dispatch( requestNote( json ) );
+				return dispatch( requestNote( json ) );
 			} );
 	};
 }

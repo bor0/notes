@@ -10,7 +10,7 @@ class NoteEditor extends Component {
 				<h3>{ id }</h3>
 				<textarea value={ note } onChange={ ( e ) => textChangeHandler( id, e.target.value ) } />
 				<br />
-				<a href="#" onClick={ () => updateHandler() }><img src="images/save.png" /></a>
+				<a href="#" onClick={ () => updateHandler( id, note ) }><img src="images/save.png" /></a>
 			</div>
 		);
 	};

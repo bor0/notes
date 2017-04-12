@@ -20,7 +20,7 @@ class NoteList extends Component {
 					List of Notes:
 				</div>
 				{
-					notes.map( note => <NoteListItem id={ note.id } key={ note.id } fetchHandler={ fetchHandler( note.id ) } deleteHandler={ () => deleteHandler( note.id ) } /> )
+					notes.map( note => <NoteListItem id={ note.id } key={ note.id } fetchHandler={ () => fetchHandler( note.id ) } deleteHandler={ () => deleteHandler( note.id ) } /> )
 				}
 			</div>
 		);
