@@ -16,6 +16,16 @@ var app = express();
 app.use( '/graphql', bodyParser.json(), graphqlExpress( { schema } ) );
 app.use( '/graphiql', graphiqlExpress( { endpointURL: '/graphql', } ) );
 
+app.use( express.static( 'assets' ) )
+
+app.set( 'views', __dirname + '/views' );
+app.set( 'view engine', 'jsx' );
+app.engine( 'jsx', require( 'express-react-views' ).createEngine());
+
+app.get( '/', ( req, res ) => {
+	res.render( 'default' );
+} );
+
 app.listen( PORT, () => {
 	console.log( `Server started at ${PORT}.` )
 } );
