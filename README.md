@@ -18,6 +18,7 @@ mutation {
     id
   }
 }
+```
 - Delete a note:
 ```
 mutation {
