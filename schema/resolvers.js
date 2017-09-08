@@ -72,8 +72,8 @@ module.exports = {
 		allNotes: async () => await getNotes(),
 	},
 	Mutation: {
-		createNote: async (_, data) => await createNote( data ),
-		deleteNote: async (_, data) => await deleteNote( data ),
-		updateNote: async (_, data) => await updateNote( data ),
+		createNote: async ( _, data ) => await createNote( data ),
+		deleteNote: async ( _, data ) => await deleteNote( data ),
+		updateNote: async ( _, data ) => await updateNote( data ),
 	},
 };
