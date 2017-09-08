@@ -2,75 +2,124 @@ export const REQUEST_NOTES = 'REQUEST_NOTES';
 export const REQUEST_NOTE = 'REQUEST_NOTE';
 export const REQUEST_UPDATE_NOTE = 'REQUEST_UPDATE_NOTE';
 
-export const requestNotes = ( json ) => {
+import ApolloClient, { createNetworkInterface } from 'apollo-client';
+import gql from 'graphql-tag';
+
+const client = new ApolloClient( {
+	networkInterface: createNetworkInterface( {
+		uri: 'http://localhost:8000/graphql',
+	} ),
+	connectToDevTools: true,
+} );
+
+export const requestNotes = ( notes ) => {
 	return {
 		type: REQUEST_NOTES,
-		notes: json,
+		notes,
 	};
 };
 
-export const requestNote = ( json ) => {
+export const requestNote = ( note ) => {
 	return {
 		type: REQUEST_NOTE,
-		id: json.id,
-		note: json.note,
+		id: note.id,
+		description: note.description,
 	};
 };
 
-export const requestUpdateNote = ( json ) => {
+export const requestUpdateNote = ( note ) => {
 	return {
 		type: REQUEST_UPDATE_NOTE,
-		id: json.id,
-		note: json.note,
+		id: note.id,
+		description: note.description,
 	};
 };
 
 export function fetchNotes() {
 	return dispatch => {
+		const query = gql`
+		{
+		  allNotes {
+		    id
+		  }
+		}
+		`;
+
 		dispatch( requestNotes() );
-		return fetch( '/api/note/' )
-			.then( response => response.json() )
-			.then( json => dispatch( requestNotes( json ) ) );
+		// TODO: Figure out why caching doesn't work
+		return client.query( { query, cachePolicy: 'no-cache' } )
+			.then( data => dispatch( requestNotes( data.data.allNotes.map( item => ( {
+				id: parseInt( item.id ),
+			} ) ) ) ) );
 	};
 }
 
 export function fetchNote( id ) {
 	return dispatch => {
+		const query = gql`
+		{
+		  allNotes( id: ${id} ) {
+		    id, description
+		  }
+		}
+		`;
+
 		dispatch( requestNote( id ) );
-		return fetch( '/api/note/' + id )
-			.then( response => response.json() )
-			.then( json => {
-				json.id = id;
-				return dispatch( requestNote( json ) );
-			} );
+		return client.query( { query } )
+			.then( data => dispatch( requestNote( data.data.allNotes.map( item => ( {
+				id: parseInt( item.id ),
+				description: item.description,
+			} ) )[ 0 ] ) ) );
 	};
 }
 
 export function deleteNote( id ) {
 	return () => {
-		return fetch( '/api/note/' + id, { method: 'DELETE' } )
-			.then( response => response.json() );
+		const mutation = gql`
+		mutation {
+		  deleteNote( id: "${id}" )
+		}
+		`;
+
+		return client.mutate( { mutation } )
+			.then( data => ( {
+				changes: data.data.deleteNote,
+			} ) );
 	};
 }
 
-export function createNote( note ) {
+export function createNote( description ) {
 	return () => {
-		const formData = new FormData();
-		formData.append( 'note', note );
+		const mutation = gql`
+		mutation {
+		  createNote( description: "${description}" ) {
+		    id, description
+		  }
+		}
+		`;
 
-		return fetch( '/api/note/', { method: 'POST', body: formData } )
-			.then( response => response.json() );
+		return client.mutate( { mutation } )
+			.then( data => ( {
+				id: parseInt( data.data.createNote.id ),
+				description: data.data.createNote.description,
+			} ) );
 	};
 }
 
 export function updateNote( note ) {
 	return dispatch => {
+		const mutation = gql`
+		mutation {
+		  updateNote( id: ${note.id}, description: "${note.description}" ) {
+		    id, description
+		  }
+		}
+		`;
+
 		dispatch( requestUpdateNote( note ) );
-
-		const formData = new FormData();
-		formData.append( 'note', note.note );
-
-		return fetch( '/api/note/' + note.id, { method: 'PUT', body: formData } )
-			.then( response => response.json() );
+		return client.mutate( { mutation } )
+			.then( data => ( {
+				changes: data.data.updateNote.id ? true : false,
+			} ) );
 	};
 }

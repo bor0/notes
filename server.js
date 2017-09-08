@@ -1,105 +1,31 @@
-require('babel-register')({
-	presets: ['es2015', 'react'],
-});
+const express = require( 'express' );
 
-var Hapi = require('hapi');
-var api = require('./api');
+// This package automatically parses JSON requests.
+const bodyParser = require( 'body-parser' );
 
-// Basic Hapi.js connection stuff
-var server = new Hapi.Server();
-server.connection({
-	host: 'localhost',
-	port: 8000
-});
+// This package will handle GraphQL server requests and responses
+// for you, based on your schema.
+const { graphqlExpress, graphiqlExpress } = require( 'apollo-server-express' );
 
-// Register the inert and vision Hapi plugins
-// As of Hapi 9.x, these two plugins are no longer
-// included in Hapi automatically
-// https://github.com/hapijs/hapi/issues/2682
-server.register([{
-	register: require('inert')
-}, {
-	register: require('vision')
-}], function(err) {
+const schema = require( './schema' );
 
-	if (err) return console.error(err);
+const PORT = 8000
 
-	// Add the React-rendering view engine
-	server.views({
-		engines: {
-			jsx: require('hapi-react-views')
-		},
-		relativeTo: __dirname,
-		path: 'views'
-	});
+var app = express();
 
-	// Add a route for retrieving all notes ids
-	server.route({
-		method: 'GET',
-		path: '/api/note/',
-		handler: function( request, reply ) {
-			api.getNotes( request, reply );
-		}
-	});
+app.use( '/graphql', bodyParser.json(), graphqlExpress( { schema } ) );
+app.use( '/graphiql', graphiqlExpress( { endpointURL: '/graphql', } ) );
 
-	// Add a route for retrieving a single note
-	server.route({
-		method: 'GET',
-		path: '/api/note/{id}',
-		handler: function( request, reply ) {
-			api.getNote( request, reply );
-		}
-	});
+app.use( express.static( 'assets' ) )
 
-	// Add a route for deleting a single note
-	server.route({
-		method: 'DELETE',
-		path: '/api/note/{id}',
-		handler: function( request, reply ) {
-			api.deleteNote( request, reply );
-		}
-	});
+app.set( 'views', __dirname + '/views' );
+app.set( 'view engine', 'jsx' );
+app.engine( 'jsx', require( 'express-react-views' ).createEngine());
 
-	// Add a route for modifying a single note
-	server.route({
-		method: 'PUT',
-		path: '/api/note/{id}',
-		handler: function( request, reply ) {
-			api.modifyNote( request, reply );
-		}
-	});
+app.get( '/', ( req, res ) => {
+	res.render( 'default' );
+} );
 
-	// Add a route for creating a note
-	server.route({
-		method: 'POST',
-		path: '/api/note/',
-		handler: function( request, reply ) {
-			api.addNote( request, reply );
-		}
-	});
-
-	// Add a route to serve static assets (CSS, JS, IMG)
-	server.route({
-		method: 'GET',
-		path: '/{param*}',
-		handler: {
-			directory: {
-				path: 'assets',
-				index: ['index.html']
-			}
-		}
-	});
-
-	// Add main app route
-	server.route({
-		method: 'GET',
-		path: '/',
-		handler: {
-			view: 'default'
-		}
-	});
-
-	server.start(function() {
-		console.log('Server started at: ' + server.info.uri);
-	});
-});
+app.listen( PORT, () => {
+	console.log( `Server started at ${PORT}.` )
+} );

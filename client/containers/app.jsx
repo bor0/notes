@@ -31,23 +31,23 @@ class App extends Component {
 			.then( () => dispatch( fetchNotes() ) );
 	};
 
-	handleNoteUpdateClick( dispatch, id, note ) {
+	handleNoteUpdateClick( dispatch, id, description ) {
 		if ( ! id ) return;
 
-		dispatch( updateNote( { note, id } ) )
+		dispatch( updateNote( { description, id } ) )
 			.then( ( json ) => {
 				if ( json.changes ) console.log( 'Note updated!' );
 			} );
 	}
 
-	handleTextChange( dispatch, id, note ) {
-		dispatch( requestUpdateNote( { note, id } ) );
+	handleTextChange( dispatch, id, description ) {
+		dispatch( requestUpdateNote( { description, id } ) );
 	}
 
 	render() {
 		const { dispatch } = this.props;
 		const { notes } = this.props;
-		const { note, id } = this.props.note || {};
+		const { description, id } = this.props.note || {};
 
 		return (
 			<div>
@@ -64,7 +64,7 @@ class App extends Component {
 				<div id="right">
 					<NoteEditor
 						id={ id }
-						note={ note }
+						description={ description }
 						updateHandler={ ( noteId, noteValue ) => this.handleNoteUpdateClick( dispatch, noteId, noteValue ) }
 						textChangeHandler={ ( noteId, noteValue ) => this.handleTextChange( dispatch, noteId, noteValue ) }
 					/>
@@ -77,9 +77,9 @@ class App extends Component {
 // This gets called for every dispatch.
 const mapStateToProps = ( state ) => {
 	const notes = state.notes.notes || [];
-	const { id, note } = state.note || {};
+	const { id, description } = state.note || {};
 
-	return { notes, note: { id, note } };
+	return { notes, note: { id, description } };
 };
 
 export default connect( mapStateToProps )( App );
