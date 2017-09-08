@@ -16,12 +16,12 @@ const notes = ( state = { notes: [] }, action ) => {
 };
 
 // Read reducer
-const note = ( state = { note: '', id: null }, action ) => {
+const note = ( state = { description: '', id: null }, action ) => {
 	switch ( action.type ) {
 		case REQUEST_UPDATE_NOTE:
 		case REQUEST_NOTE:
 			return Object.assign( {}, state, {
-				note: action.note,
+				description: action.description,
 				id: action.id,
 			} );
 		default:

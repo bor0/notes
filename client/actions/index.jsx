@@ -13,7 +13,7 @@ export const requestNote = ( json ) => {
 	return {
 		type: REQUEST_NOTE,
 		id: json.id,
-		note: json.note,
+		description: json.description,
 	};
 };
 
@@ -21,7 +21,7 @@ export const requestUpdateNote = ( json ) => {
 	return {
 		type: REQUEST_UPDATE_NOTE,
 		id: json.id,
-		note: json.note,
+		description: json.description,
 	};
 };
 
@@ -68,7 +68,7 @@ export function updateNote( note ) {
 		dispatch( requestUpdateNote( note ) );
 
 		const formData = new FormData();
-		formData.append( 'note', note.note );
+		formData.append( 'description', note.description );
 
 		return fetch( '/api/note/' + note.id, { method: 'PUT', body: formData } )
 			.then( response => response.json() );

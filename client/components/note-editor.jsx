@@ -3,14 +3,14 @@ import { PropTypes } from 'prop-types';
 
 class NoteEditor extends Component {
 	render() {
-		const { note, id, textChangeHandler, updateHandler } = this.props || {};
+		const { description, id, textChangeHandler, updateHandler } = this.props || {};
 
 		return (
 			<div style={ { display: id ? '' : 'none' } }>
 				<h3>{ id }</h3>
-				<textarea value={ note } onChange={ ( e ) => textChangeHandler( id, e.target.value ) } />
+				<textarea value={ description } onChange={ ( e ) => textChangeHandler( id, e.target.value ) } />
 				<br />
-				<a href="#" onClick={ () => updateHandler( id, note ) }><img src="images/save.png" /></a>
+				<a href="#" onClick={ () => updateHandler( id, description ) }><img src="images/save.png" /></a>
 			</div>
 		);
 	};
