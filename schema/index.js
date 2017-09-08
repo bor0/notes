@@ -9,7 +9,7 @@ const typeDefs = `
   }
 
   type Query {
-    allNotes: [Note!]!
+    allNotes(id: ID): [Note!]!
   }
 
   type Mutation {

@@ -6,9 +6,11 @@ db.serialize( () => {
 	db.run( 'CREATE TABLE IF NOT EXISTS notes (description TEXT)' );
 } );
 
-var getNotes = () => {
+var getNotes = ( data ) => {
 	return new Promise( ( resolve, reject ) => {
-		db.all( 'SELECT rowid AS id, * FROM notes', ( err, rows ) => {
+		let where = data.id ? ' WHERE id = ' + data.id : '';
+
+		db.all( 'SELECT rowid AS id, * FROM notes' + where, ( err, rows ) => {
 			if ( err ) {
 				reject( err );
 			} else {
@@ -69,7 +71,7 @@ var updateNote = ( data ) => {
 
 module.exports = {
 	Query: {
-		allNotes: async () => await getNotes(),
+		allNotes: async ( _, data ) => await getNotes( data ),
 	},
 	Mutation: {
 		createNote: async ( _, data ) => await createNote( data ),
